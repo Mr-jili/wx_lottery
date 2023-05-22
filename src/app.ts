@@ -1,9 +1,8 @@
 import { createApp } from 'vue'
 import { Button, Toast } from '@nutui/nutui-taro';
 import { TurnTable } from "@nutui/nutui-bingo-taro";
+
 import "@nutui/nutui-bingo/dist/style.css";
-
-
 import './app.scss'
 
 const App = createApp({
