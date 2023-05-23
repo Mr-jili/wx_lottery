@@ -11,7 +11,7 @@ const HTTP_STATUS = {
   BAD_GATEWAY: 502,
   SERVICE_UNAVAILABLE: 503,
   GATEWAY_TIMEOUT: 504,
-  NO_AUT: 10600 // token失效
+  NO_AUT: 401 // token失效
 }
 
 const customInterceptor = (chain) => {
@@ -29,7 +29,6 @@ const customInterceptor = (chain) => {
         duration: 4000
       })
     }
-    console.log(res, '111111')
     if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
       return Promise.reject({ desc: '请求资源不存在' })
     } else if (res.statusCode === HTTP_STATUS.ERROR_MESSAGE) {
@@ -58,14 +57,12 @@ Taro.addInterceptor(customInterceptor)
 class Request {
   public headers: Set<Record<string, string>> = new Set()
 
-  option (url: string, method: Method, params?: Record<string, any>) {
+  option(url: string, method: Method, params?: Record<string, any>) {
     // 通过在这里增加this.headers 来增加一些固定的header 例如 token 之类的数据
-    // this.headers.add({
-
-    // })
-    if (Taro.getStorageSync('selectInfo')) {
+    const token = Taro.getStorageSync('token')
+    if (token) {
       this.headers.add({
-        projectId: Taro.getStorageSync('selectInfo').projectId
+        Authorization: 'Bearer' + ' ' + token
       })
     }
     let header = {
@@ -86,19 +83,19 @@ class Request {
     })
   }
 
-  get (url: string, params?: Record<string, any>) {
+  get(url: string, params?: Record<string, any>) {
     return this.option(url, 'GET', params)
   }
 
-  post (url: string, params?: Record<string, any>) {
+  post(url: string, params?: Record<string, any>) {
     return this.option(url, 'POST', params)
   }
 
-  put (url: string, params?: Record<string, any>) {
+  put(url: string, params?: Record<string, any>) {
     this.option(url, 'PUT', params)
   }
 
-  delete (url: string, params?: Record<string, any>) {
+  delete(url: string, params?: Record<string, any>) {
     this.option(url, 'DELETE', params)
   }
 }

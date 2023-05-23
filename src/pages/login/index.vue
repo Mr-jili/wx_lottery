@@ -1,50 +1,58 @@
 <template>
-  <view class="index">
-    <view>
-      <img src alt />
+  <view class="login">
+    <view class="content">
+      <nut-input placeholder="请输入用户名" v-model="state.username" />
+      <nut-input placeholder="请输入密码" v-model="state.password" type="password"/>
     </view>
-    {{ msg }}
-    <view class="btn">
-      <nut-button type="primary" @click="handleClick('text', msg2, true)">登录</nut-button>
-    </view>
-    <nut-toast :msg="msg" :visible="show" :type="type" :cover="cover" />
+    <nut-button class="btn" type="primary" @click="handleClick()">登录</nut-button>
   </view>
 </template>
 
-<script>
+<script lang="ts">
 import Taro from "@tarojs/taro";
-import { reactive, toRefs } from "vue";
+import { reactive } from "vue";
+import { setLogin } from "../../common/api";
 export default {
   name: "Index",
   components: {},
   setup() {
     const state = reactive({
-      msg: "欢迎使用 NutUI3.0 开发小程序",
-      msg2: "你成功了～",
-      type: "text",
-      show: false,
-      cover: false
+      username: "admin",
+      password: "admin123",
     });
 
-    const handleClick = (type, msg, cover = false) => {
-      Taro.switchTab({
-        url: "/pages/home/index"
+    const handleClick = async () => {
+      const { data } = await setLogin({
+        username: "admin",
+        password: "admin123",
       });
+      if (data.code === 200) {
+        Taro.setStorageSync("token", data.token);
+        Taro.showToast({
+          title: "登录成功",
+          success: () => {
+            Taro.switchTab({
+              url: "/pages/home/index",
+            });
+          },
+        });
+      }
     };
 
     return {
-      ...toRefs(state),
-      handleClick
+      state,
+      handleClick,
     };
-  }
+  },
 };
 </script>
 
 <style lang="scss">
-.index {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.login {
   text-align: center;
+  .btn {
+    margin-top: 50px;
+    width: 300px;
+  }
 }
 </style>

@@ -1,6 +1,21 @@
 import http from "./request"
 
-// 判断手机号是否是服务人员
-export const queryPhoneIsVaild = (params: Record<string, any>) => {
-    return http.get("ccs/applet/work-order-login/" + params.phone)
+// 登录
+export const setLogin = (params: Record<string, any>) => {
+    return http.post("/login", params)
+}
+
+// 摇号
+export const setLottery = (params: Record<string, any>) => {
+    return http.get(`/lottery/${params.num}/${params.type}`)
+}
+
+// 历史记录
+export const getHistoryList = (params: Record<string, any>) => {
+    return http.get("/lottery/history/list", params)
+}
+
+// 查询公司列表
+export const getCompanyList = (params: Record<string, any>) => {
+    return http.get("/lottery/company/list", params)
 }
