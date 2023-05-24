@@ -4,6 +4,7 @@ export default defineAppConfig({
 		'pages/login/index',
 		'pages/center/index',
 		'pages/history/index',
+		'pages/estimate/index'
 	],
 	tabBar: {
 		color: "#666",
@@ -13,14 +14,14 @@ export default defineAppConfig({
 		list: [
 			{
 				pagePath: "pages/home/index",
-				iconPath: "./assets/images/home.png",
-				selectedIconPath: "./assets/images/home.png",
+				iconPath: "./assets/images/shouye.png",
+				selectedIconPath: "./assets/images/shouye-on.png",
 				text: "首页"
 			},
 			{
 				pagePath: "pages/center/index",
-				iconPath: "./assets/images/home.png",
-				selectedIconPath: "./assets/images/home.png",
+				iconPath: "./assets/images/wode.png",
+				selectedIconPath: "./assets/images/wode-on.png",
 				text: "个人"
 			}
 		]

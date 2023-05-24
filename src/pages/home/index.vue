@@ -1,16 +1,12 @@
 <template>
   <view class="index">
-    首页1111
-
     <ul>
       <li v-for="item in lotteryList">
         {{ item.companyName }}
       </li>
     </ul>
-
+    <CustomLottery></CustomLottery>
     <nut-button class="btn" type="primary" @click="handleLottery">摇号</nut-button>
-
-
     <nut-button class="btn" type="primary" @click="handleHistory">历史记录</nut-button>
   </view>
 </template>
@@ -20,6 +16,7 @@ import Taro from "@tarojs/taro";
 import { ref, reactive, onMounted } from "vue";
 import { Toast } from "@nutui/nutui";
 import { getCompanyList, setLottery } from "../../common/api";
+import CustomLottery from '../../components/customLottery'
 
 const companyList = ref([])
 const lotteryList = ref([])
@@ -30,12 +27,14 @@ const init = () => {
     Taro.redirectTo({
       url: '/pages/login/index'
     })
+    return false
   }
+  getCompanyData()
 }
 
-// 获取公司列表
+// 获取公司列表 companyType 1商业 2住宅
 const getCompanyData = async () => {
-  const { data } = await getCompanyList({})
+  const { data } = await getCompanyList({ companyType: 2 })
   companyList.value = data
 }
 
@@ -57,7 +56,6 @@ const handleHistory = () => {
 
 onMounted(() => {
   init()
-  getCompanyData()
 })
 </script>
 

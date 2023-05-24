@@ -12,8 +12,10 @@ import { getHistoryList } from "../../common/api";
 
 const historyList = ref([])
 
+// lotteryType 1商业 2住宅
 const getHistoryData = async () => {
   const { data } = await getHistoryList({
+    lotteryType: 1,
     pageNum: 1,
     pageSize: 10,
     'params[beginTime]': '2023-05-22 00:00:00',

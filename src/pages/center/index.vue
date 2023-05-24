@@ -1,17 +1,28 @@
 <template>
   <view class="index">
-    个人中心
+    <view class="index-top">
+      <nut-avatar size="large">
+        <img
+          src="https://img12.360buyimg.com/imagetools/jfs/t1/196430/38/8105/14329/60c806a4Ed506298a/e6de9fb7b8490f38.png" />
+      </nut-avatar>
+      <view class="index-top-title">admin</view>
+    </view>
+    <view class="index-bottom">
+      <nut-cell title="历史记录" size="large"></nut-cell>
+      <nut-cell title="房产评估" size="large" style="margin-top: 20px;" @click="handleToEstimate"></nut-cell>
+    </view>
   </view>
 </template>
 
 <script>
 import { reactive, toRefs } from 'vue';
+import Taro from "@tarojs/taro";
 export default {
   name: 'Index',
   components: {
-    
+
   },
-  setup(){
+  setup() {
     const state = reactive({
       msg: '欢迎使用 NutUI3.0 开发小程序',
       msg2: '你成功了～',
@@ -27,9 +38,16 @@ export default {
       state.cover = cover;
     };
 
+    const handleToEstimate = () => {
+      Taro.navigateTo({
+        url: '/pages/estimate/index'
+      })
+    } 
+
     return {
       ...toRefs(state),
-      handleClick
+      handleClick,
+      handleToEstimate
     }
   }
 }
@@ -37,9 +55,18 @@ export default {
 
 <style lang="scss">
 .index {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
+
+  &-top {
+    margin-top: 40px;
+
+    &-title {
+      color: #999999;
+    }
+  }
+
+  &-bottom {
+    margin: 20px;
+  }
 }
 </style>
