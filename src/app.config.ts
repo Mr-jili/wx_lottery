@@ -2,7 +2,7 @@ export default defineAppConfig({
 	pages: [
 		'pages/home/index',
 		'pages/login/index',
-		'pages/center/index',
+		'pages/mine/index',
 		'pages/history/index',
 		'pages/estimate/index'
 	],
@@ -19,7 +19,7 @@ export default defineAppConfig({
 				text: "首页"
 			},
 			{
-				pagePath: "pages/center/index",
+				pagePath: "pages/mine/index",
 				iconPath: "./assets/images/wode.png",
 				selectedIconPath: "./assets/images/wode-on.png",
 				text: "个人"
