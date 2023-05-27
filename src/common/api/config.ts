@@ -1,5 +1,5 @@
 
-let baseUrl: string = 'http://43.140.193.136:8080'
+let baseUrl: string = 'http://62.234.171.123/prod-api'
 // switch (process.env.NODE_ENV) {
 //   case 'development':
 //     baseUrl = 'https://iot-test.hosjoy.com/'

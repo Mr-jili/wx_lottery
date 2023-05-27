@@ -1,4 +1,5 @@
 export default definePageConfig({
-    navigationBarTitleText: '首页'
-  })
-  
+  backgroundColor: "#ffffff",
+  navigationStyle: "custom",
+  // enablePullDownRefresh: true,// 当前页面开启下拉刷新
+});

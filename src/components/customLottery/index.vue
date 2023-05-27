@@ -75,10 +75,10 @@
         prizeBgColors: [
           "rgb(255, 231, 149)",
           "rgb(255, 247, 223)",
-          "rgb(255, 231, 149)",
+          "rgb(255,85,32)",
           "rgb(255, 247, 223)",
           "rgb(255, 231, 149)",
-          "rgb(255, 247, 223)"
+          "rgb(255,85,32)",
         ],
         // 每一个扇形的外边框颜色
         borderColor: "#ff9800"
@@ -115,6 +115,8 @@
   </script>
   
   <style lang="scss">
-
+  page {
+    background-color: #f5f5f5;
+  }
   </style>
   

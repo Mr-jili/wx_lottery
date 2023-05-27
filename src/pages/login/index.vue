@@ -2,7 +2,8 @@
     <view class="login-index">
         <!-- <img :src="headerUrl" class="header-img" /> -->
         <view class="login-index-content">
-            <text>您好，欢迎登录！</text>
+            <text>房地产评估机构摇号</text>
+            <!-- <text>您好，欢迎登录！</text> -->
             <view class="login-index-content-input">
                 <view style="margin-top:40px">
                     <view class="login-input">

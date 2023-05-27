@@ -1,13 +1,30 @@
 <template>
-  <view class="index">
-    <ul>
-      <li v-for="item in lotteryList">
-        {{ item.companyName }}
-      </li>
-    </ul>
-    <CustomLottery></CustomLottery>
-    <nut-button class="btn" type="primary" @click="handleLottery">摇号</nut-button>
-    <nut-button class="btn" type="primary" @click="handleHistory">历史记录</nut-button>
+  <view class="home">
+    <view class="home-nav" :style="{ paddingTop: state.statusBarHeight + 'px' }">
+      <view class="home-nav-title" :style="{ lineHeight: state.barHeight + (state.top - state.statusBarHeight) + 'px' }">
+        授信押品
+      </view>
+    </view>
+    <nut-tabs size="large" v-model="tabValue" :animated-time="0" @click="changeTab">
+      <nut-tab-pane title="商业评估">
+      </nut-tab-pane>
+      <nut-tab-pane title="住宅评估">
+      </nut-tab-pane>
+    </nut-tabs>
+    <nutbig-turntable class="turntable" ref="turntable" :width="luckWidth" :height="luckheight" :prize-list="prizeList"
+      :lock-time="4" :turns-number="5" :turns-time="5" :prize-index="prizeIndex" :style-opt="styleOpt"
+      :pointer-style="pointerStyle" @start-turns="startTurns" @end-turns="endTurns"></nutbig-turntable>
+    <nut-button class="home-btn" style="" block type="primary" @click="handleLottery">摇号</nut-button>
+
+    <view class="home-result" v-if="tableData.length > 0">
+      <nut-divider :dashed="true" style="color:#ff5520;margin: 20px;">摇中名单</nut-divider>
+      <view class="home-result-content">
+        <view class="home-result-content-item" v-for="(value, index) in tableData" :key="value.companyName">
+          <view class="round">{{ index + 1 }}</view>
+          <text class="text">{{ value.companyName }}</text>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -18,8 +35,71 @@ import { Toast } from "@nutui/nutui";
 import { getCompanyList, setLottery } from "../../common/api";
 import CustomLottery from '../../components/customLottery'
 
-const companyList = ref([])
-const lotteryList = ref([])
+const tabValue = ref(0)
+
+
+const tableData = ref([])
+
+// 顶部导航栏
+const state = reactive({
+  statusBarHeight: 0,
+  barHeight: 0,
+  top: 0
+})
+const { top, height } = Taro.getMenuButtonBoundingClientRect()
+const { statusBarHeight, platform } = Taro.getSystemInfoSync() //状态栏高度
+state.top = top
+state.statusBarHeight = statusBarHeight
+if (top && height) {
+  state.barHeight = (top - statusBarHeight) * 2 + height //navigationBar 距屏幕上方的距离
+} else {
+  if (platform === 'android') {
+    state.barHeight = 48;
+  } else {
+    state.barHeight = 40;
+  }
+}
+
+// 摇号
+const turntable = ref(null);
+const luckWidth = ref("300px");
+const luckheight = ref("300px");
+const pointerStyle = {
+  width: "80px",
+  height: "80px",
+  // backgroundImage:
+  //   'url("https://img11.360buyimg.com/imagetools/jfs/t1/89512/11/15244/137408/5e6f15edEf57fa3ff/cb57747119b3bf89.png")',
+  backgroundSize: "contain",
+  backgroundRepeat: "no-repeat"
+};
+const prizeList = ref([]);
+const turnsTime = ref(5);
+const styleOpt = reactive({
+  prizeBgColors: [
+    "rgb(255, 231, 149)",
+    "rgb(255, 247, 223)",
+    "rgba(246, 142, 46, 0.5)",
+    "rgb(255, 247, 223)",
+    "rgb(255, 231, 149)",
+    "rgba(246, 142, 46, 0.5)"
+  ],
+  borderColor: "#ff9800"
+});
+const prizeIndex = ref(-1);
+const startTurns = () => {};
+const endTurns = async () => {
+  console.log("中奖了");
+  const { data } = await setLottery({
+    type: tabValue.value == 1 ? 2 : 1,
+    num: 2
+  })
+  tableData.value = data.data.map((item, index) => {
+    return {
+      companyName: item.companyName,
+      index: index + 1
+    }
+  })
+};
 
 const init = () => {
   // 如果未获取到token，退回登录页
@@ -34,17 +114,21 @@ const init = () => {
 
 // 获取公司列表 companyType 1商业 2住宅
 const getCompanyData = async () => {
-  const { data } = await getCompanyList({ companyType: 2 })
-  companyList.value = data
+  tableData.value = []
+  const value = tabValue.value == 1 ? 2 : 1
+  const { data } = await getCompanyList({ companyType: value })
+  prizeList.value = data.rows.map(item => {
+    return {
+      id: item.id,
+      prizeName: item.companyName,
+      prizeImg: item.companyPic
+    }
+  })
 }
 
 // 摇号
 const handleLottery = async () => {
-  const { data } = await setLottery({
-    type: 1,
-    num: 1
-  })
-  lotteryList.value = data.data
+  turntable.value.rotateTurn();
 }
 
 // 历史记录
@@ -54,13 +138,71 @@ const handleHistory = () => {
   })
 }
 
+const changeTab = (tab) => {
+  tabValue.value = tab.paneKey;
+  getCompanyData()
+}
+
 onMounted(() => {
   init()
 })
 </script>
 
 <style lang="scss">
-.index {
-  color: red;
+.home {
+  &-nav {
+    width: 100%;
+    // height: 40px;
+    text-align: center;
+    background: linear-gradient(#ff5520, #ff9d4a);
+    // border-bottom-left-radius: 20px;
+    // border-bottom-right-radius: 20px;
+
+    &-title {
+      color: #ffffff;
+      font-size: 20px;
+    }
+  }
+
+  &-btn {
+    width: 300px;
+    margin-left: 37.5px;
+    position: absolute;
+    top: 69%;
+  }
+
+  &-result {
+    width: 375px;
+    position: absolute;
+    top: 75%;
+
+    &-content {
+      text-align: center;
+
+      &-item {
+        margin: 10px 20px;
+        display: flex;
+        align-items: center;
+
+        .round {
+          width: 30px;
+          height: 30px;
+          background-color: red;
+          color: #ffffff;
+          border-radius: 50%;
+          text-align: center;
+          line-height: 30px;
+          font-size: 20px;
+        }
+
+        .text {
+          padding-left: 20px;
+          flex: 1;
+
+          font-size: 18px;
+        }
+      }
+    }
+  }
 }
 </style>

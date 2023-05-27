@@ -21,25 +21,29 @@ const customInterceptor = (chain) => {
   })
   return chain.proceed(requestParams).then(res => {
     Taro.hideLoading()
+    const { code, msg } = res.data 
     // 只要请求成功，不管返回什么状态码，都走这个回调
-    if (res.statusCode !== HTTP_STATUS.SUCCESS) {
+    if (code !== HTTP_STATUS.SUCCESS) {
       Taro.showToast({
-        title: res.data.message,
+        title: msg,
         icon: 'none',
-        duration: 4000
+        duration: 2000
       })
     }
-    if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
+    if (code === HTTP_STATUS.NOT_FOUND) {
       return Promise.reject({ desc: '请求资源不存在' })
-    } else if (res.statusCode === HTTP_STATUS.ERROR_MESSAGE) {
+    } else if (code === HTTP_STATUS.ERROR_MESSAGE) {
       return Promise.reject({ desc: "请求错误" })
-    } else if (res.statusCode === HTTP_STATUS.BAD_GATEWAY) {
+    } else if (code === HTTP_STATUS.BAD_GATEWAY) {
       return Promise.reject({ desc: "服务端出现了问题" })
-    } else if (res.statusCode === HTTP_STATUS.SERVER_ERROR) {
+    } else if (code === HTTP_STATUS.SERVER_ERROR) {
       return Promise.reject({ desc: "服务器错误" });
-    } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
+    } else if (code === HTTP_STATUS.SUCCESS) {
       return res
-    } else if (res.statusCode === HTTP_STATUS.NO_AUT) {
+    } else if (code === HTTP_STATUS.NO_AUT) {
+      Taro.redirectTo({
+        url: '/pages/login/index'
+      })
       return Promise.reject({ desc: "token失效" });
     }
   }, error => {

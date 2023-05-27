@@ -9,6 +9,12 @@ import {
   FormItem,
   Calendar,
   Popup,
+  Navbar,
+  Tabs,
+  TabPane,
+  Table,
+  Divider,
+  Menu, MenuItem
 } from "@nutui/nutui-taro";
 import { TurnTable } from "@nutui/nutui-bingo-taro";
 
@@ -28,6 +34,13 @@ App.use(Button)
   .use(Calendar)
   .use(Avatar)
   .use(Cell)
-  .use(Popup);
+  .use(Popup)
+  .use(Navbar)
+  .use(Tabs)
+  .use(TabPane)
+  .use(Divider)
+  .use(Menu)
+  .use(MenuItem)
+  .use(Table);
 
 export default App;
