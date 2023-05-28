@@ -14,7 +14,13 @@ import {
   TabPane,
   Table,
   Divider,
-  Menu, MenuItem
+  Menu,
+  MenuItem,
+  Empty,
+  Icon,
+  Popover,
+  OverLay,
+  InfiniteLoading
 } from "@nutui/nutui-taro";
 import { TurnTable } from "@nutui/nutui-bingo-taro";
 
@@ -41,6 +47,11 @@ App.use(Button)
   .use(Divider)
   .use(Menu)
   .use(MenuItem)
-  .use(Table);
+  .use(Table)
+  .use(Empty)
+  .use(Popover)
+  .use(OverLay)
+  .use(InfiniteLoading)
+  .use(Icon);
 
 export default App;

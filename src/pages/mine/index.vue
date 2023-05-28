@@ -14,13 +14,13 @@
 
     <view class="mine-content">
       <view class="mine-content-item" @click="handleToHistory">
-        <text>历史记录</text>
-        <img :src="arrowRight" alt="">
+        <text>摇号记录</text>
+        <nut-icon name="rect-right"></nut-icon>
       </view>
       <view class="mine-content-item" @click="handleToEstimate">
         <text>房产评估</text>
-        <img :src="arrowRight" alt="">
-      </view>     
+        <nut-icon name="rect-right"></nut-icon>
+      </view>
     </view>
   </view>
 </template>
@@ -102,22 +102,21 @@ page {
     border-radius: 8px;
     color: #333333;
     font-size: 20px;
-    padding: 20px;
+
     &-item {
-      height: 40px;
-      line-height: 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding: 12px 20px;
+      
       &:nth-of-type(1) {
-        margin-bottom: 20px;
         border-bottom: 1px solid #f5f5f5;
       }
+
       img {
         width: 30px;
         height: 30px;
       }
     }
   }
-}
-</style>
+}</style>

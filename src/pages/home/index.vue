@@ -5,16 +5,16 @@
         授信押品
       </view>
     </view>
-    <nut-tabs size="large" v-model="tabValue" :animated-time="0" @click="changeTab">
-      <nut-tab-pane title="商业评估">
-      </nut-tab-pane>
-      <nut-tab-pane title="住宅评估">
-      </nut-tab-pane>
+    <nut-tabs size="large" v-model="tabValue" style="" :animated-time="0" @click="changeTab">
+      <nut-tabpane title="商业评估" pane-key="1"></nut-tabpane>
+      <nut-tabpane title="住宅评估" pane-key="2"></nut-tabpane>
     </nut-tabs>
+
     <nutbig-turntable class="turntable" ref="turntable" :width="luckWidth" :height="luckheight" :prize-list="prizeList"
       :lock-time="4" :turns-number="5" :turns-time="5" :prize-index="prizeIndex" :style-opt="styleOpt"
       :pointer-style="pointerStyle" @start-turns="startTurns" @end-turns="endTurns"></nutbig-turntable>
-    <nut-button class="home-btn" style="" block type="primary" @click="handleLottery">摇号</nut-button>
+    <nut-button class="home-btn" style="" block type="primary" @click="handleLottery">{{ tableData.length === 0 ? '摇 号' :
+      '重 新 摇 号' }}</nut-button>
 
     <view class="home-result" v-if="tableData.length > 0">
       <nut-divider :dashed="true" style="color:#ff5520;margin: 20px;">摇中名单</nut-divider>
@@ -35,8 +35,7 @@ import { Toast } from "@nutui/nutui";
 import { getCompanyList, setLottery } from "../../common/api";
 import CustomLottery from '../../components/customLottery'
 
-const tabValue = ref(0)
-
+const tabValue = ref(1)
 
 const tableData = ref([])
 
@@ -86,11 +85,11 @@ const styleOpt = reactive({
   borderColor: "#ff9800"
 });
 const prizeIndex = ref(-1);
-const startTurns = () => {};
+const startTurns = () => { };
 const endTurns = async () => {
   console.log("中奖了");
   const { data } = await setLottery({
-    type: tabValue.value == 1 ? 2 : 1,
+    type: tabValue.value,
     num: 2
   })
   tableData.value = data.data.map((item, index) => {
@@ -115,8 +114,7 @@ const init = () => {
 // 获取公司列表 companyType 1商业 2住宅
 const getCompanyData = async () => {
   tableData.value = []
-  const value = tabValue.value == 1 ? 2 : 1
-  const { data } = await getCompanyList({ companyType: value })
+  const { data } = await getCompanyList({ companyType: tabValue.value })
   prizeList.value = data.rows.map(item => {
     return {
       id: item.id,
@@ -149,6 +147,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+page {
+  background-color: #ffffff;
+}
+
 .home {
   &-nav {
     width: 100%;
@@ -185,14 +187,14 @@ onMounted(() => {
         align-items: center;
 
         .round {
-          width: 30px;
-          height: 30px;
+          width: 24px;
+          height: 24px;
           background-color: red;
           color: #ffffff;
           border-radius: 50%;
           text-align: center;
-          line-height: 30px;
-          font-size: 20px;
+          line-height: 24px;
+          font-size: 18px;
         }
 
         .text {
