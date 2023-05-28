@@ -20,7 +20,6 @@ import {
   Icon,
   Popover,
   OverLay,
-  InfiniteLoading
 } from "@nutui/nutui-taro";
 import { TurnTable } from "@nutui/nutui-bingo-taro";
 
@@ -51,7 +50,6 @@ App.use(Button)
   .use(Empty)
   .use(Popover)
   .use(OverLay)
-  .use(InfiniteLoading)
   .use(Icon);
 
 export default App;
