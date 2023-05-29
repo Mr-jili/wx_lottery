@@ -3,7 +3,7 @@
         <view class="estimate-item">
             <view>评估值</view>
             <view>
-                <nut-input style="width: 240px" type="number" v-model="state.num" placeholder="请输入" />
+                <nut-input style="width: 300px" type="number" v-model="state.num" placeholder="请输入" />
                 <text>元</text>
             </view>
         </view>
@@ -14,7 +14,7 @@
         <view class="estimate-item">
             <view>浮动系数</view>
             <view>
-                <nut-input style="width: 240px" type="number" v-model="state.ratio" placeholder="请输入" />
+                <nut-input style="width: 300px" type="number" v-model="state.ratio" placeholder="请输入" />
                 <text>%</text>
             </view>
         </view>
@@ -37,11 +37,11 @@ const state = reactive({
 
 
 state.amount = computed(() => {
-    return state.num / 10000 * 0.005 * 10000
+    return (state.num / 10000 * 0.005 * 10000).toFixed(0)
 })
 
 state.chargeAmount = computed(() => {
-    return state.amount * state.ratio / 100
+    return (state.amount * state.ratio / 100).toFixed(0)
 })
 
 </script>  

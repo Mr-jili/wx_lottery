@@ -34,7 +34,7 @@
             <nut-icon name="loading"></nut-icon>
             <text>加载中...</text>
           </view>
-          <view v-else>
+          <view v-else-if="state.status === 'nomore'">
             哎呀，这里是底部了啦
           </view>
         </view>
@@ -118,6 +118,8 @@ const handleClick = (value) => {
 }
 
 const handleChange = (value) => {
+  state.pageNum = 1
+  historyList.value = []
   state.lotteryType = value
   getHistoryData()
 }
@@ -132,6 +134,8 @@ const setChooseValue = param => {
   state.date = [...[param[0][3], param[1][3]]];
   state.dateText = [...[param[0][3], param[1][3]]].join('至')
   searchTime.value.toggle()
+  historyList.value = []
+  state.pageNum = 1
   getHistoryData()
 };
 

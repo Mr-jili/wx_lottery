@@ -107,7 +107,7 @@ page {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 20px;
+      padding: 16px 20px;
       
       &:nth-of-type(1) {
         border-bottom: 1px solid #f5f5f5;
