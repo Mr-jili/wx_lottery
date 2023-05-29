@@ -13,7 +13,7 @@
                     </view>
                     <view class="login-input">
                         <img :src="pswUrl" class="code-icon" />
-                        <nut-input v-model="state.password" label="密码" style="flex:1;" label-width="50"
+                        <nut-input v-model="state.password" type="password" label="密码" style="flex:1;" label-width="50"
                             placeholder="输入密码" />
                     </view>
                 </view>
@@ -29,13 +29,12 @@ import { reactive } from 'vue'
 import { setLogin } from "../../common/api";
 import './index.scss'
 
-// const headerUrl = 'https://hosjoy-hbp.oss-cn-hangzhou.aliyuncs.com/application/iot-bill/home-header.png'
 const unUrl = require('../../assets/images/icon-phone.png')
 const pswUrl = require('../../assets/images/icon-password.png')
 
 const state = reactive({
-    username: "admin",
-    password: "admin123"
+    username: "",
+    password: ""
 })
 
 const loginIn = async () => {

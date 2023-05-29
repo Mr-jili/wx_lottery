@@ -22,7 +22,7 @@ export default defineAppConfig({
 				pagePath: "pages/mine/index",
 				iconPath: "./assets/images/wode.png",
 				selectedIconPath: "./assets/images/wode-on.png",
-				text: "个人"
+				text: "我的"
 			}
 		]
 	},

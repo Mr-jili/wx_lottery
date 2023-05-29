@@ -137,6 +137,8 @@ const setChooseValue = param => {
 
 usePullDownRefresh(() => {
   state.pageNum = 1
+  state.date = []
+  state.dateText = ''
   getHistoryData()
 })
 
@@ -178,7 +180,6 @@ page {
 
   &-content {
     margin: 20px;
-    padding-bottom: 60px;
 
     &-item {
       position: relative;
@@ -221,7 +222,7 @@ page {
 
   .load-more {
     width: 100%;
-    padding: 20px 0;
+    padding-bottom: 20px;
     color: #666666;
     font-size: 16px;
     text-align: center;
