@@ -8,7 +8,7 @@
           <img
             src="https://img12.360buyimg.com/imagetools/jfs/t1/196430/38/8105/14329/60c806a4Ed506298a/e6de9fb7b8490f38.png" />
         </nut-avatar>
-        <view class="mine-top-title">admin</view>
+        <view class="mine-top-title">系统管理员</view>
       </view>
     </view>
 
@@ -17,11 +17,13 @@
         <text>摇号记录</text>
         <nut-icon name="rect-right"></nut-icon>
       </view>
-      <view class="mine-content-item" @click="handleToEstimate">
+      <!-- <view class="mine-content-item" @click="handleToEstimate">
         <text>房产评估</text>
         <nut-icon name="rect-right"></nut-icon>
-      </view>
+      </view> -->
     </view>
+    <nut-button class="mine-footer" block type="primary"
+      @click="handleExit">退出登录</nut-button>
   </view>
 </template>
 
@@ -60,6 +62,13 @@ const handleToHistory = () => {
     url: '/pages/history/index'
   })
 }
+
+const handleExit = () => {
+  Taro.removeStorageSync('token')
+  Taro.redirectTo({
+    url: '/pages/login/index'
+  })
+}
 </script>
 
 <style lang="scss">
@@ -91,7 +100,7 @@ page {
     &-title {
       padding: 10px 0;
       color: #ffffff;
-      font-size: 24px;
+      font-size: px;
     }
   }
 
@@ -101,14 +110,14 @@ page {
     background-color: #ffffff;
     border-radius: 8px;
     color: #333333;
-    font-size: 20px;
+    font-size: 16px;
 
     &-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 16px 20px;
-      
+
       &:nth-of-type(1) {
         border-bottom: 1px solid #f5f5f5;
       }
@@ -119,4 +128,12 @@ page {
       }
     }
   }
-}</style>
+
+  &-footer {
+    width: 335px;
+    margin-left: 20px;
+    position: absolute;
+    bottom: 20px;
+  }
+}
+</style>

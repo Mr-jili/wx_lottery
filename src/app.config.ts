@@ -19,6 +19,12 @@ export default defineAppConfig({
 				text: "首页"
 			},
 			{
+				pagePath: "pages/estimate/index",
+				iconPath: "./assets/images/shouye.png",
+				selectedIconPath: "./assets/images/shouye-on.png",
+				text: "收费标准"
+			},
+			{
 				pagePath: "pages/mine/index",
 				iconPath: "./assets/images/wode.png",
 				selectedIconPath: "./assets/images/wode-on.png",

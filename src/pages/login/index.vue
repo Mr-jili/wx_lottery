@@ -17,6 +17,7 @@
                             placeholder="输入密码" />
                     </view>
                 </view>
+                <view>记住密码</view>
                 <nut-button style="width:100%;height:48px" type="primary" @click="loginIn">登录</nut-button>
             </view>
         </view>
