@@ -54,7 +54,6 @@ const state = reactive({
             radius: '30px', background: '#ff4e2c',
             pointer: true,
             fonts: [{ text: '开始\n摇号', fontSize: '16px', top: '-25px', fontColor: '#fff' }],
-            imgs: [{ src: require('../../assets/images/yaohao.png') }]
         },
     ],
     defaultConfig: {

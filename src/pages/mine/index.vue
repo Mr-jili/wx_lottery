@@ -17,10 +17,6 @@
         <text>摇号记录</text>
         <nut-icon name="rect-right"></nut-icon>
       </view>
-      <!-- <view class="mine-content-item" @click="handleToEstimate">
-        <text>房产评估</text>
-        <nut-icon name="rect-right"></nut-icon>
-      </view> -->
     </view>
     <nut-button class="mine-footer" block type="primary"
       @click="handleExit">退出登录</nut-button>

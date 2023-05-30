@@ -17,7 +17,7 @@
                             placeholder="输入密码" />
                     </view>
                     <view style="margin-left: 200px;margin-top: 20px;">
-                        <nut-checkbox v-model="state.isNeedRemember">记住密码</nut-checkbox>
+                        <nut-checkbox v-model="state.isNeedRemember" :icon-size="22">记住密码</nut-checkbox>
                     </view>
                 </view>
                 <nut-button style="width:100%;height:48px" type="primary" @click="loginIn">登录</nut-button>

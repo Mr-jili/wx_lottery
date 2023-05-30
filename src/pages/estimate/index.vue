@@ -62,7 +62,6 @@
 import { computed } from '@vue/reactivity';
 import { number2text, richText } from '../../common/utils'
 import { reactive } from 'vue';
-import BigNumber from 'bignumber.js'
 import { stat } from 'fs';
 
 const state = reactive({
@@ -119,25 +118,6 @@ const state = reactive({
         }
     ]
 })
-
-
-// state.amount = computed(() => {
-//     if (!state.num) {
-//         return 0
-//     }
-//     const num = JSON.parse(JSON.stringify(state.num))
-//     const num1 = new BigNumber(num).div(10000)
-//     const num2 = new BigNumber(num1).times(0.005)
-//     const num3 = new BigNumber(num2).times(10000)
-//    return num3
-// })
-
-// state.chargeAmount = computed(() => {
-//     const num1 = new BigNumber(state.ratio).div(100)
-//     const num2 = new BigNumber(state.amount).times(num1)
-//     return num2
-// })
-
 
 state.amount = computed(() => {
     return (state.num / 10000 * 0.005 * 10000).toFixed(2)
