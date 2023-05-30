@@ -5,7 +5,8 @@
       <nut-menu-item title="筛选" ref="searchTime">
         <view class="search-time" @click="openSwitch('isTimeVisible')">
           <text>{{ state.dateText === '' ? '按时间筛选' : state.dateText }}</text>
-          <nut-icon name="clock"></nut-icon>
+          <nut-icon v-if="state.dateText === ''" name="clock"></nut-icon>
+          <nut-icon v-else name="circle-close" @click.stop="handleReset"></nut-icon>
         </view>
       </nut-menu-item>
     </nut-menu>
@@ -111,6 +112,14 @@ const getHistoryData = async (num) => {
     state.status = 'nomore'
   }
   Taro.stopPullDownRefresh()
+}
+
+// 时间重置
+const handleReset = () => {
+  state.date = []
+  state.dateText = ''
+  searchTime.value.toggle()
+  getHistoryData()
 }
 
 const handleClick = (value) => {

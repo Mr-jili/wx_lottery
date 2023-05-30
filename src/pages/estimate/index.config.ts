@@ -1,4 +1,4 @@
 export default definePageConfig({
-    navigationBarTitleText: '房产评估'
+    navigationBarTitleText: '收费标准'
   })
   
