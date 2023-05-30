@@ -6,6 +6,7 @@
                 <nut-input style="width: 300px" type="number" v-model="state.num" placeholder="请输入" />
                 <text>元</text>
             </view>
+            <view>人民币：{{ number2text(state.num) }}</view>
         </view>
         <view class="estimate-item">
             <view>标准收费</view>
@@ -26,6 +27,7 @@
 </template>
 <script setup>
 import { computed } from '@vue/reactivity';
+import { number2text } from '../../common/utils'
 import { reactive } from 'vue';
 
 const state = reactive({
@@ -53,11 +55,13 @@ page {
 
 .estimate {
     font-size: 16px;
-
+    
     &-item {
         display: flex;
         align-items: center;
         padding: 20px 0;
+        border-bottom: 1px solid red;
+        background-color: #fff;
 
         view:nth-of-type(1) {
             margin-right: 28px;
