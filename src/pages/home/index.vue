@@ -8,8 +8,8 @@
         </view>
         <nut-tabs style="width: 180px; margin-top: 20px;" size="large" v-model="tabValue" :animated-time="0"
             @click="changeTab">
-            <nut-tabpane title="商业评估" pane-key="1"></nut-tabpane>
-            <nut-tabpane title="住宅评估" pane-key="2"></nut-tabpane>
+            <nut-tabpane title="商业评估" pane-key="1" :disabled="state.isExecute"></nut-tabpane>
+            <nut-tabpane title="住宅评估" pane-key="2" :disabled="state.isExecute"></nut-tabpane>
         </nut-tabs>
         <view class="home-content">
             <LuckyWheel v-if="state.prizes.length > 0" ref="myLucky" width="248px" height="248px"
@@ -26,6 +26,10 @@
                     <text class="text">{{ value.companyName }}</text>
                 </view>
             </view>
+        </view>
+        <view class="home-record" @click="handleToHistory">
+            <text>摇号记录</text>
+            <nut-icon name="right"></nut-icon>
         </view>
     </view>
 </template>
@@ -74,7 +78,8 @@ const state = reactive({
     // 第二次摇中
     prizeIndex2: null,
     shakeList: [],
-    index: 0
+    index: 0,
+    isExecute: false // 是否摇中执行完毕
 })
 
 // 顶部导航栏
@@ -98,7 +103,8 @@ async function startCallback() {
     state.index = 0
     if (companyList.value.length === 1) {
         Taro.showToast({
-            title: '数据量过少，请进行增加！'
+            title: '数据量过少，请进行增加！',
+            icon: 'none'
         })
         return false
     }
@@ -107,6 +113,7 @@ async function startCallback() {
         type: tabValue.value,
         num: 2
     })
+    state.isExecute = true
     const shakeData = data.data
     state.shakeList = shakeData
     state.prizeIndex1 = companyList.value.findIndex(item => item.id === shakeData[0].id)
@@ -121,6 +128,9 @@ async function startCallback() {
 
 // 抽奖结束会触发end回调
 async function endCallback(prize) {
+    if (state.index === 0) {
+        tableData.value = []
+    }
     ++state.index;
     if (state.index === 1) {
         myLucky.value.play()
@@ -134,6 +144,7 @@ async function endCallback(prize) {
             companyName: state.shakeList[1].companyName,
             index: 2
         })
+        state.isExecute = false
     }
 }
 
@@ -162,16 +173,23 @@ const getCompanyData = async () => {
 }
 
 // 历史记录
-const handleHistory = () => {
+const handleToHistory = () => {
     Taro.navigateTo({
         url: '/pages/history/index'
     })
 }
 
 const changeTab = (tab) => {
-    tableData.value = []
-    tabValue.value = tab.paneKey;
-    getCompanyData()
+    if (state.isExecute) {
+        Taro.showToast({
+            title: '正在摇号中，请稍后切换',
+            icon: 'none'
+        })
+    } else {
+        tableData.value = []
+        tabValue.value = tab.paneKey;
+        getCompanyData()
+    }
 }
 
 onMounted(() => {
