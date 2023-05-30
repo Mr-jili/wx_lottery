@@ -31,7 +31,6 @@
 import { reactive, toRefs } from 'vue';
 import Taro from "@tarojs/taro";
 
-const arrowRight = reactive(require('../../assets/images/arrow-right.png'))
 const state = reactive({
   statusBarHeight: 0,
   barHeight: 0,

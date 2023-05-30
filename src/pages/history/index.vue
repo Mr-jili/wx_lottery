@@ -56,7 +56,6 @@ import { reactive, ref, onMounted } from 'vue';
 import { getHistoryList } from '../../common/api'
 import { usePullDownRefresh, useReachBottom } from '@tarojs/taro';
 
-const arrowBottom = ref(require('../../assets/images/arrow-down.png'))
 const state = reactive({
   pageNum: 1,
   pageSize: 10,

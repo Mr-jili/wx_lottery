@@ -20,8 +20,8 @@ export default defineAppConfig({
 			},
 			{
 				pagePath: "pages/estimate/index",
-				iconPath: "./assets/images/shouye.png",
-				selectedIconPath: "./assets/images/shouye-on.png",
+				iconPath: "./assets/images/zhangdan.png",
+				selectedIconPath: "./assets/images/zhangdan-on.png",
 				text: "收费标准"
 			},
 			{
