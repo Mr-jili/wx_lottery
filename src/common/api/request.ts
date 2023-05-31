@@ -75,7 +75,7 @@ class Request {
         let header = {
             'content-type': 'application/json'
         }
-        if (this.headers) {
+        if (this.headers && url !== '/login') {
             // 动态增加header 可以在这里增加
             this.headers.forEach(head => {
                 header = { ...header, ...head }
