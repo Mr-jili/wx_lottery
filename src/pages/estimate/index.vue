@@ -34,18 +34,16 @@
             <view class="estimate-item-desc">人民币：{{ Number(state.chargeAmount) !== 0 ? number2text(state.chargeAmount) : ''
             }}</view>
         </view>
-        <!-- v-if="state.num" -->
         <view class="calculation">
             <view style="font-size: 16px;font-weight: 600;">计算过程</view>
-            <view class="calculation-item">服务项目:房产评估</view>
-            <view class="calculation-item">评估值:{{ state.num }}{{ state.num ? `（${number2text(state.num)}）` : '' }}
+            <view class="calculation-item">服务项目：房产评估</view>
+            <view class="calculation-item">评估值：{{ state.num || 0 }}{{ state.num ? `（${number2text(state.num)}）` : '' }}
             </view>
             <view class="calculation-item">
-                标准收费=({{ state.num / 10000 }} * 0.005)*10000= {{ state.amount }}{{ state.amount ?
-                    `（${number2text(state.amount)}）` : '' }}</view>
-            <view class="calculation-item">浮动系数:{{ state.ratio }}%</view>
+                标准收费={{ state.amountText }}</view>
+            <view class="calculation-item">浮动系数：{{ state.ratio }}%</view>
             <view class="calculation-item">收费金额=标准收费*浮动系数=
-                {{ state.amount }}*{{ state.ratio }}={{ state.chargeAmount }}{{
+                {{ state.amount }}*{{ state.ratio }}%={{ state.chargeAmount }}{{
                     state.chargeAmount ?
                     `（${number2text(state.chargeAmount)}）` : '' }}</view>
         </view>
@@ -62,12 +60,12 @@
 import { computed } from '@vue/reactivity';
 import { number2text, richText } from '../../common/utils'
 import { reactive } from 'vue';
-import { stat } from 'fs';
 
 const state = reactive({
     num: '',
     ratio: 100,
     amount: '0.00',
+    amountText: '',
     chargeAmount: '0.00',
     nodes: richText,
     columns: [{
@@ -77,7 +75,7 @@ const state = reactive({
         title: '房地产价格总额（万元）',
         key: 'title'
     }, {
-        title: '累进计费率%',
+        title: '累进计费率‰',
         key: 'amount'
     }],
     data: [
@@ -120,7 +118,33 @@ const state = reactive({
 })
 
 state.amount = computed(() => {
-    return (state.num / 10000 * 0.005 * 10000).toFixed(2)
+    let amountEnd = 0
+    let amountText = ``
+    const currentNum = state.num / 10000;
+    if (currentNum <= 100) {
+        amountEnd = (currentNum * 0.005 * 10000)
+        amountText = `（${currentNum} * 0.005） * 10000 = ${amountEnd.toFixed(2)}（${number2text(amountEnd)}）`
+    } else if (currentNum > 100 && currentNum <= 1000) {
+        amountEnd = (100 * 0.005 + (currentNum - 100) * 0.0025) * 10000
+        amountText = `（100 * 0.005 + （${currentNum} - 100） * 0.0025） * 10000 = ${amountEnd.toFixed(2)}（${number2text(amountEnd)}）`
+    } else if (currentNum > 1000 && currentNum <= 2000) {
+        amountEnd = (100 * 0.005 + 900 * 0.0025 + (currentNum - 1000) * 0.0015) * 10000
+        amountText = `（100 * 0.005 + 900 * 0.0025 + （${currentNum} - 1000） * 0.0015） * 10000 = ${amountEnd.toFixed(2)}（${number2text(amountEnd)}）`
+    } else if (currentNum > 2000 && currentNum <= 5000) {
+        amountEnd = (100 * 0.005 + 900 * 0.0025 + 1000 * 0.0015 + (currentNum - 2000) * 0.0008) * 10000
+        amountText = `（100 * 0.005 + 900 * 0.0025 + 1000 * 0.0015 +（${currentNum} - 2000） * 0.0008） * 10000 = ${amountEnd.toFixed(2)}（${number2text(amountEnd)}）`
+    } else if (currentNum > 5000 && currentNum <= 8000) {
+        amountEnd = (100 * 0.005 + 900 * 0.0025 + 1000 * 0.0015 + 3000 * 0.0008 + (currentNum - 5000) * 0.0004) * 10000
+        amountText = `（100 * 0.005 + 900 * 0.0025 + 1000 * 0.0015 + 3000 * 0.0008 +（${currentNum} - 5000） * 0.0004） * 10000 = ${amountEnd.toFixed(2)}（${number2text(amountEnd)}）`
+    } else if (currentNum > 8000 && currentNum <= 10000) {
+        amountEnd = (100 * 0.005 + 900 * 0.0025 + 1000 * 0.0015 + 3000 * 0.0008 + 3000 * 0.0004 + (currentNum - 8000) * 0.0002) * 10000
+        amountText = `（100 * 0.005 + 900 * 0.0025 + 1000 * 0.0015 + 3000 * 0.0008 + 3000 * 0.0004 +（${currentNum} - 8000） * 0.0002） * 10000 = ${amountEnd.toFixed(2)}（${number2text(amountEnd)}）`
+    } else if (currentNum > 10000) {
+        amountEnd = (100 * 0.005 + 900 * 0.0025 + 1000 * 0.0015 + 3000 * 0.0008 + 3000 * 0.0004 + 2000 * 0.0002 + (currentNum - 10000) * 0.0001) * 10000
+        amountText = `（100 * 0.005 + 900 * 0.0025 + 1000 * 0.0015 + 3000 * 0.0008 + 3000 * 0.0004 + 2000 * 0.0002 +（${currentNum} - 10000） * 0.0001） * 10000 = ${amountEnd.toFixed(2)}（${number2text(amountEnd)}）`
+    }
+    state.amountText = amountText
+    return amountEnd.toFixed(2)
 })
 
 state.chargeAmount = computed(() => {
@@ -141,6 +165,7 @@ page {
         background-color: #ffffff;
         margin: 10px 0;
         padding: 20px;
+
         &-item {
             padding: 10px 0;
         }
@@ -156,8 +181,7 @@ page {
             display: flex;
             align-items: center;
 
-            &-title {
-            }
+            &-title {}
 
             &-input {
                 display: flex;
