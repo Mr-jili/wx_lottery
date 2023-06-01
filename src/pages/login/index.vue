@@ -42,6 +42,22 @@ const state = reactive({
 })
 
 const loginIn = async () => {
+    if (!state.username) {
+        Taro.showToast({
+            title: '请输入用户名',
+            icon: 'none'
+        })
+        return false
+    }
+
+    if (!state.password) {
+        Taro.showToast({
+            title: '请输入密码',
+            icon: 'none'
+        })
+        return false
+    }
+
     const { data } = await setLogin({
         username: state.username,
         password: state.password

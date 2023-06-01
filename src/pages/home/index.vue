@@ -68,10 +68,9 @@ const state = reactive({
         fontColor: '#fff',
         fontSize: '12px',
         fontStyle: '黑体',
-        lengthLimit: '80%',
-        lineHeight: 20,
-        lengthLimit: '40%',
-        lineClamp: 2
+        lengthLimit: '90%',
+        lineHeight: 18,
+        lineClamp: 3
     },
     // 第一次摇中
     prizeIndex1: null,
@@ -163,11 +162,25 @@ const init = () => {
 const getCompanyData = async () => {
     tableData.value = []
     const { data } = await getCompanyList({ companyType: tabValue.value })
-    state.prizes = data.rows.map((item, index) => {
-        return {
-            fonts: [{ text: item.companyName, top: '20%' }]
-        }
-    })
+    if (data.rows.length === 2) {
+        state.prizes = data.rows.filter((item, index) => index < 2).map((item, index) => {
+            return {
+                fonts: [{ text: item.companyName, top: '25%', lengthLimit: '120px', fontSize: '12px' }]
+            }
+        })
+    } else if (data.rows.length >= 7) {
+        state.prizes = data.rows.map((item, index) => {
+            return {
+                fonts: [{ text: item.companyName, top: '5%', lengthLimit: '90%', lineClamp: 3, fontSize: '11px' }]
+            }
+        })
+    } else {
+        state.prizes = data.rows.map((item, index) => {
+            return {
+                fonts: [{ text: item.companyName, top: '15%', fontSize: '12px', lineClamp: 3 }]
+            }
+        })
+    }
     companyList.value = data.rows
     state.loadFinish = true
 }
