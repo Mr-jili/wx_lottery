@@ -6,6 +6,14 @@ export default defineAppConfig({
 		'pages/history/index',
 		'pages/estimate/index'
 	],
+    subPackages: [{
+        "root": "pages/root",
+        "pages": [
+            "password/index",
+            "register/index",
+            "ImprovePersonal/index"
+        ]
+    }],
 	tabBar: {
 		color: "#666",
 		selectedColor: "#b4282d",

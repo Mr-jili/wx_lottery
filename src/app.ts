@@ -20,7 +20,9 @@ import {
     Icon,
     Popover,
     OverLay,
-    Checkbox, 
+    Checkbox,
+    CellGroup,
+    Dialog
 } from "@nutui/nutui-taro";
 
 import "./app.scss";
@@ -49,6 +51,8 @@ App.use(Button)
     .use(Popover)
     .use(OverLay)
     .use(Checkbox)
+    .use(CellGroup)
+    .use(Dialog)
     .use(Icon);
 
 export default App;

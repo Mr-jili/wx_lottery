@@ -1,8 +1,23 @@
 import http from "./request"
 
-// 登录
+// 登录 source 1 是后台区分后台管理系统与小程序
 export const setLogin = (params: Record<string, any>) => {
-    return http.post("/login", params)
+    return http.post("/login", { ...params, source: 1 })
+}
+
+// 注册用户
+export const setRegister = (params: Record<string, any>) => {
+    return http.post("/register", params)
+}
+
+// 修改用户信息
+export const updateUserInfo = (params: Record<string, any>) => {
+    return http.put("/system/user/profile", params)
+}
+
+// 修改密码
+export const updatePassword = (params: Record<string, any>) => {
+    return http.put("/system/user/profile/updatePwd", params)
 }
 
 // 摇号
@@ -17,5 +32,5 @@ export const getHistoryList = (params: Record<string, any>) => {
 
 // 查询公司列表
 export const getCompanyList = (params: Record<string, any>) => {
-    return http.get("/lottery/company/list", params)
+    return http.get("/lottery/company/list", { ...params, isDelete: 1 })
 }

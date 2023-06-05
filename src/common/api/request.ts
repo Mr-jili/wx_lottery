@@ -65,7 +65,6 @@ class Request {
     public headers: Set<Record<string, string>> = new Set()
 
     option(url: string, method: Method, params?: Record<string, any>) {
-        // 通过在这里增加this.headers 来增加一些固定的header 例如 token 之类的数据
         const token = Taro.getStorageSync('token')
         if (token) {
             this.headers.add({
@@ -75,8 +74,9 @@ class Request {
         let header = {
             'content-type': 'application/json'
         }
+        // 登录接口与公司列表不需要
+        // && url !== '/lottery/company/list'
         if (this.headers && url !== '/login') {
-            // 动态增加header 可以在这里增加
             this.headers.forEach(head => {
                 header = { ...header, ...head }
             })

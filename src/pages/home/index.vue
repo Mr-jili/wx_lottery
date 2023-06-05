@@ -31,6 +31,10 @@
             <text>摇号记录</text>
             <nut-icon name="right"></nut-icon>
         </view>
+
+        <!-- 摇号客户名称 -->
+        <nut-dialog title="客户名称" :content="state.dialogContent" v-model:visible="state.visible">
+        </nut-dialog>
     </view>
 </template>
 
@@ -50,6 +54,8 @@ const state = reactive({
     barHeight: 0,
     top: 0,
     loadFinish: false,
+    visible: false,
+    dialogContent: `<div>2333333</div>`,
     prizes: [],
     buttons: [
         { radius: '40px', background: '#fff1c8' },
@@ -99,6 +105,21 @@ if (top && height) {
 const myLucky = ref(null)
 
 async function startCallback() {
+    // 如果未获取到token，退回登录页
+    if (!Taro.getStorageSync('token')) {
+        Taro.showToast({
+            title: '请进行登录',
+            icon: 'none',
+            success: () => {
+                setTimeout(() => {
+                    Taro.redirectTo({
+                        url: '/pages/login/index'
+                    })
+                }, 1000)
+            }
+        })
+        return false
+    }
     state.index = 0
     if (companyList.value.length === 1) {
         Taro.showToast({
@@ -148,13 +169,6 @@ async function endCallback(prize) {
 }
 
 const init = () => {
-    // 如果未获取到token，退回登录页
-    if (!Taro.getStorageSync('token')) {
-        Taro.redirectTo({
-            url: '/pages/login/index'
-        })
-        return false
-    }
     getCompanyData()
 }
 
