@@ -2,7 +2,7 @@ import http from "./request"
 
 // 登录 source 1 是后台区分后台管理系统与小程序
 export const setLogin = (params: Record<string, any>) => {
-    return http.post("/login", { ...params, source: 1 })
+    return http.post("/login", { ...params, source: '1' })
 }
 
 // 注册用户
