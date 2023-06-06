@@ -32,13 +32,6 @@ const onFinish = () => {
             await updateUserInfo({ ...state })
             Taro.showToast({
                 title: '修改成功',
-                success: () => {
-                    setTimeout(() => {
-                        Taro.redirectTo({
-                            url: '/pages/login/index'
-                        })
-                    }, 1000);
-                }
             })
         } else {
             console.log('error submit!!', res.errors);

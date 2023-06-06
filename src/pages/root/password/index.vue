@@ -29,11 +29,14 @@ const state = reactive({
 const onFinish = async () => {
     form.value.validate().then(async res => {
         if (res.valid) {
-            await updatePassword({ ...state })
+            const dataJson = { ...state }
+            delete dataJson.confirmPassword
+            await updatePassword({ ...dataJson })
             Taro.showToast({
                 title: '修改成功',
                 success: () => {
                     setTimeout(() => {
+                        Taro.removeStorageSync('token')
                         Taro.redirectTo({
                             url: '/pages/login/index'
                         })

@@ -15,8 +15,8 @@
         <view class="history-content-item" v-for="value in historyList" :key="value.lotteryPeriods">
           <view style="padding: 20px 20px 10px 20px;" @click="handleClick(value)">
             <view class="top">
-              <text>{{ value.lotteryPeriods }}</text>
-              <text>{{ value.createTime }}</text>
+              <text>{{ value.customerName || '--' }}</text>
+              <text>{{ value.createTime.slice(0, 16) }}</text>
             </view>
             <view class="center" v-for="(child, childIndex) in value.realEstatelLotteryWinningList"
               :key="childIndex + 'A'">
@@ -206,6 +206,10 @@ page {
         margin-bottom: 10px;
 
         text:nth-of-type(1) {
+          width: 170px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
           font-size: 16px;
           color: #333333;
         }

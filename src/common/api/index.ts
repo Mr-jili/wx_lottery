@@ -22,7 +22,7 @@ export const updatePassword = (params: Record<string, any>) => {
 
 // 摇号
 export const setLottery = (params: Record<string, any>) => {
-    return http.get(`/lottery/${params.num}/${params.type}`)
+    return http.get(`/lottery/${params.num}/${params.type}/${params.customerName}`)
 }
 
 // 历史记录
