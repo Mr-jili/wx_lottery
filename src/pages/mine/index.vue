@@ -38,7 +38,7 @@
 
 <script setup>
 import { reactive, toRefs, onMounted } from 'vue';
-import Taro from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 
 const state = reactive({
     username: Taro.getStorageSync('username'),
@@ -96,8 +96,7 @@ const handleExit = () => {
     })
 }
 
-
-onMounted(() => {
+useDidShow(() => {
     if (!Taro.getStorageSync('token')) {
         state.isLogin = false
     } else {

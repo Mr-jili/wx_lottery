@@ -29,6 +29,21 @@ const state = reactive({
 const onFinish = async () => {
     form.value.validate().then(async res => {
         if (res.valid) {
+            if (state.newPassword !== state.confirmPassword) {
+                Taro.showToast({
+                    title: '密码输入不一致',
+                    icon: 'none'
+                })
+                return false
+            }
+            const password = Taro.getStorageInfoSync('password')
+            if (state.oldPassword !== 'password') {
+                Taro.showToast({
+                    title: '修改密码失败，旧密码错误',
+                    icon: 'none'
+                })
+                return false
+            }
             const dataJson = { ...state }
             delete dataJson.confirmPassword
             await updatePassword({ ...dataJson })

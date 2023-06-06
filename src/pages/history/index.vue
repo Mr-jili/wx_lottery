@@ -15,12 +15,30 @@
         <view class="history-content-item" v-for="value in historyList" :key="value.lotteryPeriods">
           <view style="padding: 20px 20px 10px 20px;" @click="handleClick(value)">
             <view class="top">
-              <text>{{ value.customerName || '--' }}</text>
-              <text>{{ value.createTime.slice(0, 16) }}</text>
+              <text>{{ value.lotteryPeriods }}</text>
+              <text>{{ value.createTime }}</text>
             </view>
             <view class="center" v-for="(child, childIndex) in value.realEstatelLotteryWinningList"
               :key="childIndex + 'A'">
               {{ childIndex + 1 }}、{{ child?.realEstatelCompany?.companyName }}
+            </view>
+            <view class="info">
+              <view class="info-item">
+                <text>客户名称：</text>
+                <text>{{ value.customerName }}</text>
+              </view>
+              <view class="info-item">
+                <text>客户经理姓名：</text>
+                <text>{{ value.nickName || '--' }}</text>
+              </view>
+              <view class="info-item">
+                <text>客户经理电话：</text>
+                <text>{{ value.phonenumber || '--' }}</text>
+              </view>
+              <view class="info-item">
+                <text>银行机构名称：</text>
+                <text>{{ value.remark || '--' }}</text>
+              </view>
             </view>
             <nut-icon size="20" style="width: 100%;margin-top: 10px;"
               :name="!value.active ? 'rect-down' : 'rect-up'"></nut-icon>
@@ -206,10 +224,6 @@ page {
         margin-bottom: 10px;
 
         text:nth-of-type(1) {
-          width: 170px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
           font-size: 16px;
           color: #333333;
         }
@@ -224,6 +238,29 @@ page {
         color: #666666;
         font-size: 16px;
         padding: 5px 0;
+      }
+
+      .info {
+        border-top: 1px solid #f5f5f5;
+        padding-top: 10px;
+        margin-top: 10px;
+
+        &-item {
+          display: flex;
+          align-items: center;
+          padding: 5px 0;
+          font-size: 14px;
+
+          text:nth-of-type(1) {
+            width: 110px;
+            color: #666666;
+          }
+
+          text:nth-of-type(2) {
+            flex: 1;
+            color: #999999;
+          }
+        }
       }
 
       .modal {

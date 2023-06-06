@@ -5,10 +5,10 @@
                 <input class="nut-input-text" v-model="state.username" placeholder="请输入用户名" type="text" />
             </nut-form-item>
             <nut-form-item label="密码" prop="password" required :rules="[{ required: true, message: '请填写密码' }]">
-                <input class="nut-input-text" v-model="state.password" placeholder="请输入密码" type="text" />
+                <input class="nut-input-text" v-model="state.password" placeholder="请输入密码" type="password" />
             </nut-form-item>
             <nut-form-item label="客户经理姓名">
-                <input class="nut-input-text" v-model="state.nickName" placeholder="请输入客户经理电话" type="number" />
+                <input class="nut-input-text" v-model="state.nickName" placeholder="请输入客户经理电话" type="text" />
             </nut-form-item>
             <nut-form-item label="客户经理电话">
                 <input class="nut-input-text" v-model="state.phonenumber" placeholder="请输入客户经理电话" type="number" />

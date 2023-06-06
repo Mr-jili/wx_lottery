@@ -35,9 +35,8 @@
         </view>
 
         <!-- 摇号客户名称 -->
-        <!-- @ok="handleOk" -->
-        <nut-dialog :closeOnClickOverlay="true" v-model:visible="state.visible" customClass="dialog-content">
-            <nut-input v-model="state.customerName" label="客户名称" placeholder="请输入客户名称" />
+        <nut-dialog title="客户名称" :closeOnClickOverlay="true" v-model:visible="state.visible" customClass="dialog-content">
+            <nut-input v-model="state.customerName" placeholder="请输入客户名称" />
             <template #footer>
                 <nut-button size="small" type="default" @click="state.visible = false;">取消</nut-button>
                 <nut-button style="margin-left: 10px;" size="small" type="primary" @click="handleOk">确定</nut-button>
@@ -198,6 +197,7 @@ const init = () => {
 const getCompanyData = async () => {
     tableData.value = []
     const { data } = await getCompanyList({ companyType: tabValue.value })
+    console.log(data, 66666)
     if (data.rows.length === 2) {
         state.prizes = data.rows.filter((item, index) => index < 2).map((item, index) => {
             return {
