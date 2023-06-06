@@ -12,7 +12,7 @@ export const setRegister = (params: Record<string, any>) => {
 
 // 修改用户信息
 export const updateUserInfo = (params: Record<string, any>) => {
-    return http.put("/system/user/profile", params)
+    return http.put(`/system/user/profile?nickName=${params.nickName}&remark=${params.remark}&phonenumber=${params.phonenumber}`, params)
 }
 
 // 修改密码

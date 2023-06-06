@@ -29,15 +29,15 @@
               </view>
               <view class="info-item">
                 <text>客户经理姓名：</text>
-                <text>{{ value.nickName || '--' }}</text>
+                <text>{{ value.userInfo.nickName || '--' }}</text>
               </view>
               <view class="info-item">
                 <text>客户经理电话：</text>
-                <text>{{ value.phonenumber || '--' }}</text>
+                <text>{{ value.userInfo.phonenumber || '--' }}</text>
               </view>
               <view class="info-item">
                 <text>银行机构名称：</text>
-                <text>{{ value.remark || '--' }}</text>
+                <text>{{ value.userInfo.remark || '--' }}</text>
               </view>
             </view>
             <nut-icon size="20" style="width: 100%;margin-top: 10px;"
@@ -249,10 +249,10 @@ page {
           display: flex;
           align-items: center;
           padding: 5px 0;
-          font-size: 14px;
+          font-size: 16px;
 
           text:nth-of-type(1) {
-            width: 110px;
+            width: 120px;
             color: #666666;
           }
 
