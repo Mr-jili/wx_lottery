@@ -103,6 +103,7 @@ const getHistoryData = async (num) => {
   const startTime = state.date.length > 0 ? state.date[0] + ' 00:00:00' : ''
   const endTime = state.date.length > 0 ? state.date[1] + ' 23:59:59' : ''
   const { data } = await getHistoryList({
+    sources: 2,
     lotteryType: state.lotteryType,
     pageNum: state.pageNum,
     pageSize: state.pageSize,
@@ -236,7 +237,7 @@ page {
 
       .center {
         color: #666666;
-        font-size: 16px;
+        font-size: 14px;
         padding: 5px 0;
       }
 
@@ -249,7 +250,7 @@ page {
           display: flex;
           align-items: center;
           padding: 5px 0;
-          font-size: 16px;
+          font-size: 14px;
 
           text:nth-of-type(1) {
             width: 120px;

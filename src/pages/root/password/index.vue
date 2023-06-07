@@ -36,8 +36,8 @@ const onFinish = async () => {
                 })
                 return false
             }
-            const password = Taro.getStorageInfoSync('password')
-            if (state.oldPassword !== 'password') {
+            const password = Taro.getStorageSync('password')
+            if (state.oldPassword !== password) {
                 Taro.showToast({
                     title: '修改密码失败，旧密码错误',
                     icon: 'none'
