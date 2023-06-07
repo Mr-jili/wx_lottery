@@ -12,18 +12,20 @@
             <nut-tabpane title="住宅评估" pane-key="2" :disabled="state.isExecute"></nut-tabpane>
         </nut-tabs>
         <view class="home-content">
-            <LuckyWheel v-if="state.prizes.length > 0" ref="myLucky" width="248px" height="248px"
-                :defaultConfig="state.defaultConfig" :defaultStyle="state.defaultStyle" :prizes="state.prizes"
-                :buttons="state.buttons" @start="startCallback" @end="endCallback">
+            <LuckyWheel :style="{ display: state.visible ? 'none' : 'block' }" v-if="state.prizes.length > 0" ref="myLucky"
+                width="248px" height="248px" :defaultConfig="state.defaultConfig" :defaultStyle="state.defaultStyle"
+                :prizes="state.prizes" :buttons="state.buttons" @start="startCallback" @end="endCallback">
             </LuckyWheel>
             <view class="home-empty" v-else-if="state.loadFinish && state.prizes.length === 0">暂无数据</view>
         </view>
         <view class="home-result" v-if="tableData.length > 0">
-            <nut-divider :dashed="true" style="color:#ff5520;margin: 20px;font-weight: 500;">摇 中 名 单</nut-divider>
+            <view class="home-result-title"> 客户名称：{{ state.customerName }}</view>
+            <nut-divider :dashed="true" style="color:#ff5520;margin: 10px 20px;font-weight: 500;">摇 中 名 单</nut-divider>
             <view class="home-result-content">
                 <view class="home-result-content-item" v-for="(value, index) in tableData" :key="value.companyName">
                     <view class="round">{{ index + 1 }}</view>
                     <text class="text">{{ value.companyName }}</text>
+
                 </view>
             </view>
         </view>
@@ -33,7 +35,12 @@
         </view>
 
         <!-- 摇号客户名称 -->
-        <nut-dialog title="客户名称" :content="state.dialogContent" v-model:visible="state.visible">
+        <nut-dialog title="客户名称" :closeOnClickOverlay="true" v-model:visible="state.visible" customClass="dialog-content">
+            <nut-input v-model="state.customerName" placeholder="请输入客户名称" />
+            <template #footer>
+                <nut-button size="small" type="default" @click="state.visible = false;">取消</nut-button>
+                <nut-button style="margin-left: 10px;" size="small" type="primary" @click="handleOk">确定</nut-button>
+            </template>
         </nut-dialog>
     </view>
 </template>
@@ -50,12 +57,12 @@ const tableData = ref([])
 const companyList = ref([])
 
 const state = reactive({
+    customerName: '',
     statusBarHeight: 0,
     barHeight: 0,
     top: 0,
     loadFinish: false,
     visible: false,
-    dialogContent: `<div>2333333</div>`,
     prizes: [],
     buttons: [
         { radius: '40px', background: '#fff1c8' },
@@ -120,7 +127,6 @@ async function startCallback() {
         })
         return false
     }
-    state.index = 0
     if (companyList.value.length === 1) {
         Taro.showToast({
             title: '数据量过少，请进行增加！',
@@ -128,10 +134,25 @@ async function startCallback() {
         })
         return false
     }
+    state.customerName = ''
+    state.visible = true
+}
+
+const handleOk = async () => {
+    if (!state.customerName) {
+        Taro.showToast({
+            title: '请输入客户名称',
+            icon: 'none'
+        })
+        return false
+    }
+    state.visible = false
+    state.index = 0
     myLucky.value.play()
     const { data } = await setLottery({
         type: tabValue.value,
-        num: 2
+        num: 2,
+        customerName: state.customerName
     })
     state.isExecute = true
     const shakeData = data.data
@@ -176,6 +197,7 @@ const init = () => {
 const getCompanyData = async () => {
     tableData.value = []
     const { data } = await getCompanyList({ companyType: tabValue.value })
+    console.log(data, 66666)
     if (data.rows.length === 2) {
         state.prizes = data.rows.filter((item, index) => index < 2).map((item, index) => {
             return {

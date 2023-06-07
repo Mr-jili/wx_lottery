@@ -22,6 +22,24 @@
               :key="childIndex + 'A'">
               {{ childIndex + 1 }}、{{ child?.realEstatelCompany?.companyName }}
             </view>
+            <view class="info">
+              <view class="info-item">
+                <text>客户名称：</text>
+                <text>{{ value.customerName }}</text>
+              </view>
+              <view class="info-item">
+                <text>客户经理姓名：</text>
+                <text>{{ value.userInfo.nickName || '--' }}</text>
+              </view>
+              <view class="info-item">
+                <text>客户经理电话：</text>
+                <text>{{ value.userInfo.phonenumber || '--' }}</text>
+              </view>
+              <view class="info-item">
+                <text>银行机构名称：</text>
+                <text>{{ value.userInfo.remark || '--' }}</text>
+              </view>
+            </view>
             <nut-icon size="20" style="width: 100%;margin-top: 10px;"
               :name="!value.active ? 'rect-down' : 'rect-up'"></nut-icon>
           </view>
@@ -220,6 +238,29 @@ page {
         color: #666666;
         font-size: 16px;
         padding: 5px 0;
+      }
+
+      .info {
+        border-top: 1px solid #f5f5f5;
+        padding-top: 10px;
+        margin-top: 10px;
+
+        &-item {
+          display: flex;
+          align-items: center;
+          padding: 5px 0;
+          font-size: 16px;
+
+          text:nth-of-type(1) {
+            width: 120px;
+            color: #666666;
+          }
+
+          text:nth-of-type(2) {
+            flex: 1;
+            color: #999999;
+          }
+        }
       }
 
       .modal {

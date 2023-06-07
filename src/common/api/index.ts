@@ -12,17 +12,17 @@ export const setRegister = (params: Record<string, any>) => {
 
 // 修改用户信息
 export const updateUserInfo = (params: Record<string, any>) => {
-    return http.put("/system/user/profile", params)
+    return http.put(`/system/user/profile?nickName=${params.nickName}&remark=${params.remark}&phonenumber=${params.phonenumber}`, params)
 }
 
 // 修改密码
 export const updatePassword = (params: Record<string, any>) => {
-    return http.put("/system/user/profile/updatePwd", params)
+    return http.put(`/system/user/profile/updatePwd?newPassword=${params.newPassword}&oldPassword=${params.oldPassword}`, params)
 }
 
 // 摇号
 export const setLottery = (params: Record<string, any>) => {
-    return http.get(`/lottery/${params.num}/${params.type}`)
+    return http.get(`/lottery/${params.num}/${params.type}/${params.customerName}`)
 }
 
 // 历史记录
@@ -34,3 +34,10 @@ export const getHistoryList = (params: Record<string, any>) => {
 export const getCompanyList = (params: Record<string, any>) => {
     return http.get("/lottery/company/list", { ...params, isDelete: 1 })
 }
+
+// 获取个人信息
+export const getUserInfo = () => {
+    return http.get("/system/user/profile")
+}
+
+

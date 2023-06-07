@@ -9,7 +9,7 @@
                     <nut-avatar style="width: 80px;height: 80px;" size="large">
                         <img :src="require('../../assets/images/login_user.png')" />
                     </nut-avatar>
-                    <view class="mine-top-title">系统管理员</view>
+                    <view class="mine-top-title">{{ state.username }}</view>
                 </view>
             </view>
 
@@ -38,9 +38,10 @@
 
 <script setup>
 import { reactive, toRefs, onMounted } from 'vue';
-import Taro from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 
 const state = reactive({
+    username: Taro.getStorageSync('username'),
     statusBarHeight: 0,
     barHeight: 0,
     top: 0,
@@ -95,8 +96,7 @@ const handleExit = () => {
     })
 }
 
-
-onMounted(() => {
+useDidShow(() => {
     if (!Taro.getStorageSync('token')) {
         state.isLogin = false
     } else {

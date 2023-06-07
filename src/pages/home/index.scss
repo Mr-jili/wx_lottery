@@ -2,6 +2,10 @@
     background: transparent;
 }
 
+.nut-input {
+    background-color: transparent;
+}
+
 .nut-tabpane {
     background: transparent;
 }
@@ -16,13 +20,22 @@
     color: #ffffff;
 }
 
+.label-input {
+    color: #ffffff;
+}
+
 page {
     background: linear-gradient(#346afc 40%,#ffffff, #835afe);
 }
 
+// .dialog-content {
+//     background-color: red;
+// }
+
 .home {
     position: relative;
     height: 100vh;
+    // background-image: url('https://www.pgjgyh.cn/prod-api/profile/system/bk.png');
     background-image: url('../../assets/images/home-bg.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -45,6 +58,7 @@ page {
         width: 335px;
         height: 335px;
         border-radius: 50%;
+        // background-image: url('https://www.pgjgyh.cn/prod-api/profile/system/zp.png');
         background-image: url('../../assets/images/yaohao-round.png');
         background-repeat: no-repeat;
         background-size: 100%;
@@ -66,7 +80,18 @@ page {
     &-result {
         width: 375px;
         position: absolute;
-        top: 73%;
+        top: 75%;
+
+        &-title {
+            font-size: 16px;
+            text-align: left;
+            color: #666666;
+            margin-left: 20px;
+            width: 335px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
 
         &-content {
             text-align: center;
