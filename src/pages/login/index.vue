@@ -22,7 +22,7 @@
                 </view>
                 <nut-button style="width:100%;height:48px" type="primary" @click="loginIn">登录</nut-button>
             </view>
-            <view class="login-footer" @click="handleToRegister">注册新用户</view>
+            <view v-if="state.isShowRegister" class="login-footer" @click="handleToRegister">注册新用户</view>
         </view>
     </view>
 </template>
@@ -39,7 +39,8 @@ const pswUrl = require('../../assets/images/icon-password.png')
 const state = reactive({
     username: "",
     password: "",
-    isNeedRemember: false
+    isNeedRemember: false,
+    isShowRegister: true
 })
 
 const loginIn = async () => {
@@ -91,6 +92,10 @@ const handleToRegister = () => {
 }
 
 onMounted(() => {
+    // 1686284134000
+    if (new Date().getTime()  < 1686284720000) {
+        state.isShowRegister = false
+    }
     // 记住密码
     const username = Taro.getStorageSync('username')
     const password = Taro.getStorageSync('password')

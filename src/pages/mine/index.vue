@@ -14,7 +14,7 @@
             </view>
 
             <view class="mine-content">
-                <view class="mine-content-item" @click="handleToPersonal">
+                <view v-if="state.isShowRegister" class="mine-content-item" @click="handleToPersonal">
                     <text>完善个人资料</text>
                     <nut-icon name="rect-right"></nut-icon>
                 </view>
@@ -45,7 +45,8 @@ const state = reactive({
     statusBarHeight: 0,
     barHeight: 0,
     top: 0,
-    isLogin: true
+    isLogin: true,
+    isShowRegister: true
 })
 const { top, height } = Taro.getMenuButtonBoundingClientRect()
 const { statusBarHeight, platform } = Taro.getSystemInfoSync() //状态栏高度
@@ -95,6 +96,12 @@ const handleExit = () => {
         url: '/pages/login/index'
     })
 }
+
+onMounted(() => {
+    if (new Date().getTime() < 1686284720000) {
+        state.isShowRegister = false
+    }
+})
 
 useDidShow(() => {
     if (!Taro.getStorageSync('token')) {

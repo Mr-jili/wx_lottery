@@ -190,6 +190,10 @@ async function endCallback(prize) {
 }
 
 const init = () => {
+    Taro.showShareMenu({
+        withShareTicket: true,
+        showShareItems: ['shareAppMessage', 'shareTimeline']
+    })
     getCompanyData()
 }
 
